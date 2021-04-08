@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qingzhi.dao.QzArticleMapper" >
+  <resultMap id="BaseResultMap" type="com.qingzhi.pojo.QzArticle" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="art_name" property="artName" jdbcType="VARCHAR" />
+    <result column="art_duinei" property="artDuinei" jdbcType="VARCHAR" />
+    <result column="art_time" property="artTime" jdbcType="VARCHAR" />
+    <result column="art_site" property="artSite" jdbcType="VARCHAR" />
+    <result column="art_leirong" property="artLeirong" jdbcType="VARCHAR" />
+    <result column="art_xqrs" property="artXqrs" jdbcType="VARCHAR" />
+    <result column="art_yyrs" property="artYyrs" jdbcType="VARCHAR" />
+    <result column="art_state" property="artState" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, art_name, art_duinei, art_time, art_site, art_leirong, art_xqrs, art_yyrs, art_state
+  </sql>
+  <select id="selectByExampletest" resultMap="BaseResultMap" parameterType="com.qingzhi.pojo.QzArticleExample">
+    SELECT * FROM qz_article ORDER BY id DESC LIMIT 8;
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.qingzhi.pojo.QzArticleExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from qz_article
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from qz_article
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="duinei"  resultMap="BaseResultMap">
+      SELECT * FROM qz_article WHERE art_duinei='队内'
+  </select>
+    <select id="duiwei"  resultMap="BaseResultMap">
+      SELECT * FROM qz_article WHERE art_duinei='队外'
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from qz_article
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qingzhi.pojo.QzArticleExample" >
+    delete from qz_article
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qingzhi.pojo.QzArticle" >
+    insert into qz_article (id, art_name, art_duinei, 
+      art_time, art_site, art_leirong, 
+      art_xqrs, art_yyrs, art_state
+      )
+    values (#{id,jdbcType=INTEGER}, #{artName,jdbcType=VARCHAR}, #{artDuinei,jdbcType=VARCHAR}, 
+      #{artTime,jdbcType=VARCHAR}, #{artSite,jdbcType=VARCHAR}, #{artLeirong,jdbcType=VARCHAR}, 
+      #{artXqrs,jdbcType=VARCHAR}, #{artYyrs,jdbcType=VARCHAR}, #{artState,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qingzhi.pojo.QzArticle" >
+    insert into qz_article
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="artName != null" >
+        art_name,
+      </if>
+      <if test="artDuinei != null" >
+        art_duinei,
+      </if>
+      <if test="artTime != null" >
+        art_time,
+      </if>
+      <if test="artSite != null" >
+        art_site,
+      </if>
+      <if test="artLeirong != null" >
+        art_leirong,
+      </if>
+      <if test="artXqrs != null" >
+        art_xqrs,
+      </if>
+      <if test="artYyrs != null" >
+        art_yyrs,
+      </if>
+      <if test="artState != null" >
+        art_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="artName != null" >
+        #{artName,jdbcType=VARCHAR},
+      </if>
+      <if test="artDuinei != null" >
+        #{artDuinei,jdbcType=VARCHAR},
+      </if>
+      <if test="artTime != null" >
+        #{artTime,jdbcType=VARCHAR},
+      </if>
+      <if test="artSite != null" >
+        #{artSite,jdbcType=VARCHAR},
+      </if>
+      <if test="artLeirong != null" >
+        #{artLeirong,jdbcType=VARCHAR},
+      </if>
+      <if test="artXqrs != null" >
+        #{artXqrs,jdbcType=VARCHAR},
+      </if>
+      <if test="artYyrs != null" >
+        #{artYyrs,jdbcType=VARCHAR},
+      </if>
+      <if test="artState != null" >
+        #{artState,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qingzhi.pojo.QzArticleExample" resultType="java.lang.Integer" >
+    select count(*) from qz_article
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update qz_article
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.artName != null" >
+        art_name = #{record.artName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.artDuinei != null" >
+        art_duinei = #{record.artDuinei,jdbcType=VARCHAR},
+      </if>
+      <if test="record.artTime != null" >
+        art_time = #{record.artTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.artSite != null" >
+        art_site = #{record.artSite,jdbcType=VARCHAR},
+      </if>
+      <if test="record.artLeirong != null" >
+        art_leirong = #{record.artLeirong,jdbcType=VARCHAR},
+      </if>
+      <if test="record.artXqrs != null" >
+        art_xqrs = #{record.artXqrs,jdbcType=VARCHAR},
+      </if>
+      <if test="record.artYyrs != null" >
+        art_yyrs = #{record.artYyrs,jdbcType=VARCHAR},
+      </if>
+      <if test="record.artState != null" >
+        art_state = #{record.artState,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update qz_article
+    set id = #{record.id,jdbcType=INTEGER},
+      art_name = #{record.artName,jdbcType=VARCHAR},
+      art_duinei = #{record.artDuinei,jdbcType=VARCHAR},
+      art_time = #{record.artTime,jdbcType=VARCHAR},
+      art_site = #{record.artSite,jdbcType=VARCHAR},
+      art_leirong = #{record.artLeirong,jdbcType=VARCHAR},
+      art_xqrs = #{record.artXqrs,jdbcType=VARCHAR},
+      art_yyrs = #{record.artYyrs,jdbcType=VARCHAR},
+      art_state = #{record.artState,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qingzhi.pojo.QzArticle" >
+    update qz_article
+    <set >
+      <if test="artName != null" >
+        art_name = #{artName,jdbcType=VARCHAR},
+      </if>
+      <if test="artDuinei != null" >
+        art_duinei = #{artDuinei,jdbcType=VARCHAR},
+      </if>
+      <if test="artTime != null" >
+        art_time = #{artTime,jdbcType=VARCHAR},
+      </if>
+      <if test="artSite != null" >
+        art_site = #{artSite,jdbcType=VARCHAR},
+      </if>
+      <if test="artLeirong != null" >
+        art_leirong = #{artLeirong,jdbcType=VARCHAR},
+      </if>
+      <if test="artXqrs != null" >
+        art_xqrs = #{artXqrs,jdbcType=VARCHAR},
+      </if>
+      <if test="artYyrs != null" >
+        art_yyrs = #{artYyrs,jdbcType=VARCHAR},
+      </if>
+      <if test="artState != null" >
+        art_state = #{artState,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qingzhi.pojo.QzArticle" >
+    update qz_article
+    set art_name = #{artName,jdbcType=VARCHAR},
+      art_duinei = #{artDuinei,jdbcType=VARCHAR},
+      art_time = #{artTime,jdbcType=VARCHAR},
+      art_site = #{artSite,jdbcType=VARCHAR},
+      art_leirong = #{artLeirong,jdbcType=VARCHAR},
+      art_xqrs = #{artXqrs,jdbcType=VARCHAR},
+      art_yyrs = #{artYyrs,jdbcType=VARCHAR},
+      art_state = #{artState,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qingzhi.dao.QzTuiwenMapper" >
+  <resultMap id="BaseResultMap" type="com.qingzhi.pojo.QzTuiwen" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="tw_biaoti" property="twBiaoti" jdbcType="VARCHAR" />
+    <result column="tw_tupian" property="twTupian" jdbcType="VARCHAR" />
+    <result column="tw_lianjie" property="twLianjie" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, tw_biaoti, tw_tupian, tw_lianjie
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.qingzhi.pojo.QzTuiwenExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from qz_tuiwen
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from qz_tuiwen
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectlimit" resultMap="BaseResultMap">
+  		   SELECT * FROM qz_tuiwen ORDER BY id DESC LIMIT 4;
+  </select>
+  <select id="suijituiwen"   resultMap="BaseResultMap">
+      SELECT * FROM qz_tuiwen ORDER BY RAND() LIMIT 4
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from qz_tuiwen
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qingzhi.pojo.QzTuiwenExample" >
+    delete from qz_tuiwen
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qingzhi.pojo.QzTuiwen" >
+    insert into qz_tuiwen (id, tw_biaoti, tw_tupian, 
+      tw_lianjie)
+    values (#{id,jdbcType=INTEGER}, #{twBiaoti,jdbcType=VARCHAR}, #{twTupian,jdbcType=VARCHAR}, 
+      #{twLianjie,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qingzhi.pojo.QzTuiwen" >
+    insert into qz_tuiwen
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="twBiaoti != null" >
+        tw_biaoti,
+      </if>
+      <if test="twTupian != null" >
+        tw_tupian,
+      </if>
+      <if test="twLianjie != null" >
+        tw_lianjie,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="twBiaoti != null" >
+        #{twBiaoti,jdbcType=VARCHAR},
+      </if>
+      <if test="twTupian != null" >
+        #{twTupian,jdbcType=VARCHAR},
+      </if>
+      <if test="twLianjie != null" >
+        #{twLianjie,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qingzhi.pojo.QzTuiwenExample" resultType="java.lang.Integer" >
+    select count(*) from qz_tuiwen
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update qz_tuiwen
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.twBiaoti != null" >
+        tw_biaoti = #{record.twBiaoti,jdbcType=VARCHAR},
+      </if>
+      <if test="record.twTupian != null" >
+        tw_tupian = #{record.twTupian,jdbcType=VARCHAR},
+      </if>
+      <if test="record.twLianjie != null" >
+        tw_lianjie = #{record.twLianjie,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update qz_tuiwen
+    set id = #{record.id,jdbcType=INTEGER},
+      tw_biaoti = #{record.twBiaoti,jdbcType=VARCHAR},
+      tw_tupian = #{record.twTupian,jdbcType=VARCHAR},
+      tw_lianjie = #{record.twLianjie,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qingzhi.pojo.QzTuiwen" >
+    update qz_tuiwen
+    <set >
+      <if test="twBiaoti != null" >
+        tw_biaoti = #{twBiaoti,jdbcType=VARCHAR},
+      </if>
+      <if test="twTupian != null" >
+        tw_tupian = #{twTupian,jdbcType=VARCHAR},
+      </if>
+      <if test="twLianjie != null" >
+        tw_lianjie = #{twLianjie,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qingzhi.pojo.QzTuiwen" >
+    update qz_tuiwen
+    set tw_biaoti = #{twBiaoti,jdbcType=VARCHAR},
+      tw_tupian = #{twTupian,jdbcType=VARCHAR},
+      tw_lianjie = #{twLianjie,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
